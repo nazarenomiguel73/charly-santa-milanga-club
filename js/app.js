@@ -1,6 +1,5 @@
 /**
- * Charly Santa Milanga Club — Menú digital estilo carta online
- * Sin carrito: cada plato y el pedido general abren WhatsApp
+ * Charly Santa Milanga Club — Menú digital con carrito → WhatsApp
  */
 
 const BADGE_LABELS = {
@@ -69,12 +68,17 @@ async function loadJson(path) {
   return res.json();
 }
 
+const CART_STORAGE_KEY = "csmc-cart-v1";
+
 let state = {
   config: null,
   menuData: null,
   flatItems: [],
   categories: [],
 };
+
+/** @type {Map<string, { item: object, qty: number }>} */
+const cart = new Map();
 
 function flattenMenu(categories) {
   return categories.flatMap((cat) =>
@@ -101,21 +105,9 @@ function generalOrderMessage() {
   return `Hola! Quiero hacer un pedido desde el menú digital de *${name}*.`;
 }
 
-function itemOrderMessage(item) {
-  const name = state.config?.businessName || "Charly Santa Milanga Club";
-  return (
-    `Hola! Vi el menú de *${name}* y me interesa:\n\n` +
-    `• *${item.name}* — ${formatPriceForWhatsApp(item)}`
-  );
-}
-
 function applyConfig(config) {
   state.config = config;
-  const waUrl = buildWhatsAppUrl(generalOrderMessage());
-
-  document.querySelectorAll("[data-whatsapp]").forEach((el) => {
-    el.href = waUrl;
-  });
+  updateWhatsAppLinks();
 
   document.querySelectorAll("[data-phone]").forEach((el) => {
     el.href = `tel:${config.phone.replace(/\s/g, "")}`;
@@ -228,9 +220,261 @@ function renderReviews(reviews) {
 
 const ORDER_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`;
 
+function getCartLineCount() {
+  let n = 0;
+  for (const { qty } of cart.values()) n += qty;
+  return n;
+}
+
+function getCartSubtotal() {
+  let total = 0;
+  let hasPriced = false;
+  for (const { item, qty } of cart.values()) {
+    if (item.price != null) {
+      total += item.price * qty;
+      hasPriced = true;
+    }
+  }
+  return hasPriced ? total : null;
+}
+
+function buildCartMessage() {
+  const name = state.config?.businessName || "Charly Santa Milanga Club";
+  const lines = [`Hola! Quiero hacer un pedido desde el menú digital de *${name}*:\n`];
+  let hasConsult = false;
+
+  for (const { item, qty } of cart.values()) {
+    const unit = formatPriceForWhatsApp(item);
+    const unitNote = item.price != null ? " c/u" : "";
+    lines.push(`• ${qty}x *${item.name}* — ${unit}${unitNote}`);
+    if (item.price == null) hasConsult = true;
+  }
+
+  const subtotal = getCartSubtotal();
+  if (subtotal != null) lines.push(`\n*Total estimado:* ${formatPrice(subtotal)}`);
+  if (hasConsult) lines.push("\n_Incluye productos a consultar precio._");
+  lines.push("\n¡Gracias!");
+  return lines.join("\n");
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify([...cart.entries()].map(([id, { qty }]) => ({ id, qty })))
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!Array.isArray(data)) return;
+    cart.clear();
+    for (const { id, qty } of data) {
+      const item = state.flatItems.find((i) => i.id === id);
+      if (item && qty > 0) cart.set(id, { item, qty });
+    }
+  } catch {
+    cart.clear();
+  }
+}
+
+function addToCart(id) {
+  const item = state.flatItems.find((i) => i.id === id);
+  if (!item) return;
+  const line = cart.get(id) || { item, qty: 0 };
+  line.qty += 1;
+  cart.set(id, line);
+  saveCart();
+  updateCartUI();
+}
+
+function setCartQty(id, qty) {
+  if (qty <= 0) cart.delete(id);
+  else {
+    const line = cart.get(id);
+    if (line) line.qty = qty;
+  }
+  saveCart();
+  updateCartUI();
+}
+
+function clearCart() {
+  cart.clear();
+  saveCart();
+  updateCartUI();
+}
+
+function updateWhatsAppLinks() {
+  const url =
+    cart.size > 0 ? buildWhatsAppUrl(buildCartMessage()) : buildWhatsAppUrl(generalOrderMessage());
+  const hasItems = cart.size > 0;
+
+  document.querySelectorAll("[data-whatsapp]").forEach((el) => {
+    el.href = url;
+  });
+
+  for (const id of ["cart-checkout", "cart-wa-send"]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.href = hasItems ? url : "#";
+    el.classList.toggle("is-disabled", !hasItems);
+  }
+}
+
+function syncMenuAddButtons() {
+  document.querySelectorAll("[data-cart-add]").forEach((btn) => {
+    const id = btn.dataset.cartAdd;
+    const qty = cart.get(id)?.qty || 0;
+    const name = btn.dataset.itemName || "producto";
+    btn.classList.toggle("is-in-cart", qty > 0);
+    btn.setAttribute(
+      "aria-label",
+      qty > 0 ? `Agregar otra ${name} al pedido` : `Agregar ${name} al pedido`
+    );
+    btn.innerHTML = qty > 0 ? `<span class="menu-item-qty">${qty}</span>` : ORDER_ICON;
+  });
+}
+
+function renderCartDrawer() {
+  const container = document.getElementById("cart-lines");
+  if (!container) return;
+
+  if (!cart.size) {
+    container.innerHTML =
+      `<p class="cart-empty">Tu pedido está vacío.<br> Tocá <strong>+</strong> en los platos para agregarlos.</p>`;
+    return;
+  }
+
+  container.innerHTML = [...cart.values()]
+    .map(({ item, qty }) => {
+      const lineTotal = item.price != null ? formatPrice(item.price * qty) : "Consultar";
+      return `
+      <article class="cart-line" data-cart-line="${escapeHtml(item.id)}">
+        <div class="cart-line-info">
+          <h3>${escapeHtml(item.name)}</h3>
+          <p class="cart-line-unit">${formatPrice(item.price)}${item.price != null ? " c/u" : ""}</p>
+        </div>
+        <div class="cart-line-actions">
+          <div class="qty-control" role="group" aria-label="Cantidad">
+            <button type="button" class="qty-btn" data-cart-qty="${escapeHtml(item.id)}" data-delta="-1" aria-label="Quitar uno">−</button>
+            <span class="qty-value">${qty}</span>
+            <button type="button" class="qty-btn" data-cart-qty="${escapeHtml(item.id)}" data-delta="1" aria-label="Agregar uno">+</button>
+          </div>
+          <p class="cart-line-total">${lineTotal}</p>
+        </div>
+      </article>`;
+    })
+    .join("");
+}
+
+function updateCartUI() {
+  const count = getCartLineCount();
+  const subtotal = getCartSubtotal();
+  const hasItems = count > 0;
+
+  const countEl = document.getElementById("cart-count");
+  const labelEl = document.getElementById("cart-summary-label");
+  const totalEl = document.getElementById("cart-summary-total");
+  const checkoutLabel = document.getElementById("cart-checkout-label");
+  const totalLine = document.getElementById("cart-total-line");
+  const orderBar = document.getElementById("order-bar");
+
+  if (countEl) {
+    countEl.textContent = String(count);
+    countEl.hidden = !hasItems;
+  }
+  if (labelEl) labelEl.textContent = hasItems ? `Ver pedido (${count})` : "Ver pedido";
+  if (totalEl) {
+    totalEl.textContent = subtotal != null ? formatPrice(subtotal) : hasItems ? "Consultar total" : "";
+  }
+  if (checkoutLabel) checkoutLabel.textContent = hasItems ? "Enviar" : "WhatsApp";
+  if (totalLine) {
+    totalLine.textContent = hasItems
+      ? subtotal != null
+        ? `Total estimado: ${formatPrice(subtotal)}`
+        : "Algunos ítems requieren consultar precio"
+      : "";
+    totalLine.hidden = !hasItems;
+  }
+  if (orderBar) orderBar.classList.toggle("has-items", hasItems);
+
+  renderCartDrawer();
+  syncMenuAddButtons();
+  updateWhatsAppLinks();
+}
+
+function openCartDrawer() {
+  const drawer = document.getElementById("cart-drawer");
+  if (!drawer) return;
+  drawer.classList.add("is-open");
+  drawer.setAttribute("aria-hidden", "false");
+  document.body.classList.add("cart-open");
+  renderCartDrawer();
+  drawer.querySelector(".cart-close")?.focus();
+}
+
+function closeCartDrawer() {
+  const drawer = document.getElementById("cart-drawer");
+  if (!drawer) return;
+  drawer.classList.remove("is-open");
+  drawer.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("cart-open");
+}
+
+function setupCart() {
+  document.getElementById("cart-open")?.addEventListener("click", openCartDrawer);
+  document.querySelectorAll("[data-cart-close]").forEach((el) => {
+    el.addEventListener("click", closeCartDrawer);
+  });
+  document.getElementById("cart-clear")?.addEventListener("click", () => {
+    if (cart.size && confirm("¿Vaciar todo el pedido?")) clearCart();
+  });
+
+  document.getElementById("cart-lines")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-cart-qty]");
+    if (!btn) return;
+    const line = cart.get(btn.dataset.cartQty);
+    if (line) setCartQty(btn.dataset.cartQty, line.qty + Number(btn.dataset.delta));
+  });
+
+  document.getElementById("cart-checkout")?.addEventListener("click", (e) => {
+    if (!cart.size) {
+      e.preventDefault();
+      openCartDrawer();
+    }
+  });
+
+  document.getElementById("cart-wa-send")?.addEventListener("click", (e) => {
+    if (!cart.size) e.preventDefault();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeCartDrawer();
+  });
+
+  const menuResults = document.getElementById("menu-results");
+  if (menuResults && !menuResults.dataset.cartBound) {
+    menuResults.dataset.cartBound = "true";
+    menuResults.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-cart-add]");
+      if (!btn) return;
+      addToCart(btn.dataset.cartAdd);
+      btn.classList.add("just-added");
+      setTimeout(() => btn.classList.remove("just-added"), 350);
+    });
+  }
+}
+
 function buildMenuItem(item) {
-  const waUrl = buildWhatsAppUrl(itemOrderMessage(item));
   const label = escapeHtml(item.name);
+  const qty = cart.get(item.id)?.qty || 0;
+  const btnContent = qty > 0 ? `<span class="menu-item-qty">${qty}</span>` : ORDER_ICON;
 
   const media = item.image
     ? `<div class="menu-item-media"><img src="${escapeHtml(item.image)}" alt="" loading="lazy"></div>`
@@ -247,13 +491,13 @@ function buildMenuItem(item) {
         <p class="menu-item-desc">${escapeHtml(item.description)}</p>
         <p class="menu-item-price${item.price == null ? " menu-item-price--consult" : ""}">${formatPrice(item.price)}</p>
       </div>
-      <a
-        class="menu-item-order"
-        href="${waUrl}"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Pedir ${label} por WhatsApp"
-      >${ORDER_ICON}</a>
+      <button
+        type="button"
+        class="menu-item-order${qty > 0 ? " is-in-cart" : ""}"
+        data-cart-add="${escapeHtml(item.id)}"
+        data-item-name="${label}"
+        aria-label="${qty > 0 ? `Agregar otra ${label} al pedido` : `Agregar ${label} al pedido`}"
+      >${btnContent}</button>
     </article>
   `;
 }
@@ -297,6 +541,7 @@ function renderMenu() {
         ${items.map(buildMenuItem).join("")}
       </div>
     `;
+    syncMenuAddButtons();
     return;
   }
 
@@ -318,6 +563,8 @@ function renderMenu() {
     `
     )
     .join("");
+
+  syncMenuAddButtons();
 }
 
 function setupCategoryNav(categories) {
@@ -415,8 +662,10 @@ async function init() {
     state.menuData = menuData;
     state.categories = menuData.categories;
     state.flatItems = flattenMenu(menuData.categories);
+    loadCart();
 
     applyConfig(config);
+    setupCart();
     renderBanner(menuData.banner);
     renderPromotions(menuData.promotions);
     renderAbout(menuData.about);
@@ -424,6 +673,7 @@ async function init() {
     setupCategoryNav(menuData.categories);
     setupSearch();
     renderMenu();
+    updateCartUI();
 
     if (menuData.categories[0]) {
       setActiveNavButton(menuData.categories[0].id);
