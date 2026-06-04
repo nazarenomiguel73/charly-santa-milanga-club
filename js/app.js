@@ -91,6 +91,7 @@ function applyConfig(config) {
 
   const map = {
     address: config.address,
+    tagline: config.tagline,
     "hours-weekdays": config.hours.weekdays,
     "hours-weekend": config.hours.weekend,
     phone: "WhatsApp disponible",
@@ -362,9 +363,22 @@ function fixStaticAssetPaths() {
   }
 }
 
+function setupHeaderScroll() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const onScroll = () => {
+    header.classList.toggle("is-scrolled", window.scrollY > 12);
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
 async function init() {
   try {
     fixStaticAssetPaths();
+    setupHeaderScroll();
 
     const [config, menuData] = await Promise.all([
       loadJson("data/config.json"),

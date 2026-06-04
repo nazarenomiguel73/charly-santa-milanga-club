@@ -14,6 +14,9 @@
   <meta name="github-pages-repo" content="charly-santa-milanga-club">
   <title>Charly Santa Milanga Club | Menú Digital</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -22,14 +25,19 @@
 
   <header class="site-header" id="inicio">
     <div class="header-inner">
-      <div class="brand">
-        <img src="assets/logo.svg" alt="" class="logo" width="52" height="52">
-        <div>
-          <h1 class="brand-name">Charly Santa Milanga Club</h1>
-          <p class="brand-hours" data-config="hours-weekdays">Cargando horarios…</p>
+      <a class="brand" href="#inicio">
+        <img src="assets/logo.svg" alt="" class="logo" width="48" height="48">
+        <div class="brand-text">
+          <span class="brand-eyebrow">Club gastronómico</span>
+          <p class="brand-name">Charly Santa Milanga</p>
         </div>
-      </div>
-      <p class="header-address" data-config="address"></p>
+      </a>
+      <nav class="site-nav" aria-label="Secciones principales">
+        <a href="#promociones">Promos</a>
+        <a href="#menu">Menú</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a class="header-cta" href="#" data-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </div>
   </header>
 
@@ -40,11 +48,19 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-bg" role="presentation"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-content">
         <p class="hero-badge">Menú digital · Escaneá el QR</p>
-        <h2 id="hero-title">Bienvenido a Charly Santa Milanga Club</h2>
-        <p class="hero-subtitle">Consultá nuestro menú y promociones.</p>
-        <a href="#menu" class="btn btn-primary">Ver Menú</a>
+        <h2 id="hero-title">Sabores de Santa Fe,<br>en tu mesa</h2>
+        <p class="hero-subtitle" data-config="tagline">Consultá nuestro menú y promociones.</p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">Ver menú</a>
+          <a href="#" class="btn btn-ghost" data-whatsapp target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
+        </div>
+        <ul class="hero-meta">
+          <li data-config="hours-weekdays">Cargando horarios…</li>
+          <li data-config="address"></li>
+        </ul>
       </div>
     </section>
 
@@ -58,8 +74,11 @@
       </div>
     </section>
 
-    <section class="promotions" id="promociones" aria-labelledby="promo-heading">
-      <h2 id="promo-heading">Promociones</h2>
+    <section class="promotions section-band" id="promociones" aria-labelledby="promo-heading">
+      <header class="section-head">
+        <p class="section-kicker">Esta semana</p>
+        <h2 id="promo-heading">Promociones</h2>
+      </header>
       <div class="carousel" data-carousel>
         <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior">‹</button>
         <div class="carousel-track" data-carousel-track></div>
@@ -69,11 +88,16 @@
     </section>
 
     <section class="menu-section" id="menu" aria-labelledby="menu-heading">
-      <h2 id="menu-heading">Menú Digital</h2>
+      <header class="section-head">
+        <p class="section-kicker">Carta completa</p>
+        <h2 id="menu-heading">Menú digital</h2>
+        <p class="section-lead">Buscá por nombre, filtrá por categoría o ordená por precio.</p>
+      </header>
 
       <div class="menu-controls">
         <label class="search-wrap">
           <span class="visually-hidden">Buscar productos</span>
+          <span class="search-icon" aria-hidden="true">⌕</span>
           <input type="search" id="search" placeholder="Buscar plato…" autocomplete="off">
         </label>
         <div class="controls-row">
@@ -99,8 +123,11 @@
       <p id="menu-empty" class="menu-empty hidden">No encontramos productos con ese criterio.</p>
     </section>
 
-    <section class="about" id="nosotros" aria-labelledby="about-heading">
-      <h2 id="about-heading">Nosotros</h2>
+    <section class="about section-band" id="nosotros" aria-labelledby="about-heading">
+      <header class="section-head">
+        <p class="section-kicker">Quiénes somos</p>
+        <h2 id="about-heading">Nosotros</h2>
+      </header>
       <div class="about-grid">
         <article>
           <h3>Nuestra historia</h3>
@@ -115,12 +142,18 @@
     </section>
 
     <section class="reviews" id="resenas" aria-labelledby="reviews-heading">
-      <h2 id="reviews-heading">Reseñas</h2>
+      <header class="section-head">
+        <p class="section-kicker">Clientes</p>
+        <h2 id="reviews-heading">Reseñas</h2>
+      </header>
       <div class="reviews-grid" data-reviews></div>
     </section>
 
-    <section class="contact" id="contacto" aria-labelledby="contact-heading">
-      <h2 id="contact-heading">Contacto</h2>
+    <section class="contact section-band" id="contacto" aria-labelledby="contact-heading">
+      <header class="section-head">
+        <p class="section-kicker">Visitános</p>
+        <h2 id="contact-heading">Contacto</h2>
+      </header>
       <div class="contact-grid">
         <div class="contact-info">
           <a class="contact-link" href="#" data-whatsapp>
@@ -155,14 +188,13 @@
   </main>
 
   <footer class="site-footer">
+    <img src="assets/logo.svg" alt="" class="footer-logo" width="64" height="64">
+    <p class="footer-brand">Charly Santa Milanga Club</p>
     <div class="footer-social" data-social></div>
     <p class="footer-address" data-config="address"></p>
-    <p class="footer-hours" data-config="hours-weekdays"></p>
-    <p class="footer-github">
-      Sitio en
-      <a href="https://nazarenomiguel73.github.io/charly-santa-milanga-club/" rel="noopener">GitHub Pages</a>
-      ·
-      <a href="https://github.com/nazarenomiguel73/charly-santa-milanga-club" rel="noopener">Repositorio</a>
+    <p class="footer-hours">
+      <span data-config="hours-weekdays"></span>
+      <span data-config="hours-weekend"></span>
     </p>
     <p class="footer-copy">© <span data-year></span> Charly Santa Milanga Club. Todos los derechos reservados.</p>
   </footer>
