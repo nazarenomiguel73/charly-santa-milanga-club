@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Charly Santa Milanga Club">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c45c26"/>
+      <stop offset="100%" stop-color="#8b2e0f"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="56" fill="url(#g)"/>
+  <text x="60" y="52" text-anchor="middle" fill="#fff8f0" font-family="Georgia, serif" font-size="22" font-weight="700">CSM</text>
+  <text x="60" y="78" text-anchor="middle" fill="#ffe8d6" font-family="Georgia, serif" font-size="11">CLUB</text>
+</svg>

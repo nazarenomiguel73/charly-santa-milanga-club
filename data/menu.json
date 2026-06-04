@@ -1,0 +1,360 @@
+{
+  "categories": [
+    {
+      "id": "pizzas-molde",
+      "name": "Pizzas al Molde",
+      "icon": "🍕",
+      "items": [
+        {
+          "id": "pizza-muzza-molde",
+          "name": "Muzzarella al molde",
+          "description": "Masa casera, salsa de tomate y muzzarella fundida.",
+          "price": 8500,
+          "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "pizza-napo-molde",
+          "name": "Napolitana al molde",
+          "description": "Muzzarella, rodajas de tomate fresco, ajo y albahaca.",
+          "price": 9200,
+          "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80",
+          "badge": "promo"
+        },
+        {
+          "id": "pizza-fugazzeta-molde",
+          "name": "Fugazzeta al molde",
+          "description": "Cebolla caramelizada, queso y orégano.",
+          "price": 9800,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "empanadas",
+      "name": "Empanadas",
+      "icon": "🥟",
+      "items": [
+        {
+          "id": "emp-carne",
+          "name": "Carne cortada a cuchillo",
+          "description": "Unidad. Horno de barro.",
+          "price": 1400,
+          "image": "https://images.unsplash.com/photo-1626082927389-6db097cdf3bd?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "emp-jyq",
+          "name": "Jamón y queso",
+          "description": "Unidad. Relleno cremoso.",
+          "price": 1300,
+          "image": ""
+        },
+        {
+          "id": "emp-humita",
+          "name": "Humita",
+          "description": "Choclo cremoso con especias.",
+          "price": 1300,
+          "image": "",
+          "badge": "nuevo"
+        },
+        {
+          "id": "docena-mixta",
+          "name": "Docena surtida",
+          "description": "Elegí tus gustos al pedir.",
+          "price": 15000,
+          "image": "",
+          "badge": "promo"
+        }
+      ]
+    },
+    {
+      "id": "tartas",
+      "name": "Tartas",
+      "icon": "🥧",
+      "items": [
+        {
+          "id": "tarta-atun",
+          "name": "Tarta de atún",
+          "description": "Porción con ensalada mixta.",
+          "price": 7500,
+          "image": ""
+        },
+        {
+          "id": "tarta-verdura",
+          "name": "Tarta de verdura y queso",
+          "description": "Espinaca, acelga y queso rallado.",
+          "price": 7200,
+          "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80"
+        }
+      ]
+    },
+    {
+      "id": "minutas",
+      "name": "Minutas",
+      "icon": "🍳",
+      "items": [
+        {
+          "id": "milanesa-papas",
+          "name": "Milanesa con papas fritas",
+          "description": "Clásica de la casa, porción generosa.",
+          "price": 11000,
+          "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "bife-chorizo",
+          "name": "Bife de chorizo con ensalada",
+          "description": "A la parrilla, punto a elección.",
+          "price": 14500,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "pastas",
+      "name": "Pastas Caseras",
+      "icon": "🍝",
+      "items": [
+        {
+          "id": "ravioles-ricota",
+          "name": "Ravioles de ricota",
+          "description": "Salsa fileto, crema o mixta.",
+          "price": 9800,
+          "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80",
+          "badge": "nuevo"
+        },
+        {
+          "id": "noquis-29",
+          "name": "Ñoquis del 29",
+          "description": "Con salsa bolognesa casera.",
+          "price": 9500,
+          "image": ""
+        },
+        {
+          "id": "canelones",
+          "name": "Canelones de verdura",
+          "description": "Gratinados con bechamel.",
+          "price": 10200,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "hamburguesas",
+      "name": "Hamburguesas",
+      "icon": "🍔",
+      "items": [
+        {
+          "id": "burger-clasica",
+          "name": "Clásica Charly",
+          "description": "Medallón 150g, cheddar, lechuga y salsa especial.",
+          "price": 10500,
+          "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "burger-doble",
+          "name": "Doble Santa",
+          "description": "Doble carne, bacon crocante y cebolla caramelizada.",
+          "price": 12800,
+          "image": "",
+          "badge": "promo"
+        }
+      ]
+    },
+    {
+      "id": "lomito",
+      "name": "Sandwiches de Lomito",
+      "icon": "🥩",
+      "items": [
+        {
+          "id": "lomito-completo",
+          "name": "Lomito completo",
+          "description": "Lomo, lechuga, tomate, huevo, jamón y queso.",
+          "price": 11500,
+          "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "lomito-simple",
+          "name": "Lomito simple",
+          "description": "Lomo tierno, pan artesanal.",
+          "price": 9800,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "milanesa",
+      "name": "Sandwiches de Milanesa",
+      "icon": "🥪",
+      "items": [
+        {
+          "id": "sand-mila-completo",
+          "name": "Milanga completa",
+          "description": "La estrella del club: milanesa, huevo, jamón y queso.",
+          "price": 11200,
+          "image": "https://images.unsplash.com/photo-1594212699903-ecda27eca4f0?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "sand-mila-al-plato",
+          "name": "Milanesa al plato",
+          "description": "Con papas y ensalada.",
+          "price": 10800,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "combos",
+      "name": "Combos",
+      "icon": "🎁",
+      "items": [
+        {
+          "id": "combo-familia",
+          "name": "Combo Familia",
+          "description": "Pizza molde + empanadas x6 + gaseosa 2.25L.",
+          "price": 22000,
+          "image": "",
+          "badge": "promo"
+        },
+        {
+          "id": "combo-almuerzo",
+          "name": "Combo Almuerzo",
+          "description": "Minuta del día + bebida + postre.",
+          "price": 13500,
+          "image": "",
+          "badge": "promo"
+        }
+      ]
+    },
+    {
+      "id": "especiales",
+      "name": "Platos Especiales",
+      "icon": "⭐",
+      "items": [
+        {
+          "id": "parrillada-club",
+          "name": "Parrillada del Club",
+          "description": "Para 2 personas. Achuras, vacío y chorizo.",
+          "price": 28000,
+          "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80",
+          "badge": "nuevo"
+        },
+        {
+          "id": "matambre",
+          "name": "Matambre a la pizza",
+          "description": "Con papas españolas.",
+          "price": 16500,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "icon": "🥤",
+      "items": [
+        {
+          "id": "gaseosa",
+          "name": "Gaseosa 500ml",
+          "description": "Coca, Sprite o Fanta.",
+          "price": 2500,
+          "image": ""
+        },
+        {
+          "id": "cerveza",
+          "name": "Cerveza tirada 500cc",
+          "description": "Rubia o roja.",
+          "price": 3500,
+          "image": "https://images.unsplash.com/photo-1608270581920-85f9e3c63d7b?w=400&q=80"
+        },
+        {
+          "id": "agua",
+          "name": "Agua mineral",
+          "description": "Con o sin gas 500ml.",
+          "price": 1800,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "postres",
+      "name": "Postres",
+      "icon": "🍰",
+      "items": [
+        {
+          "id": "flan",
+          "name": "Flan casero con dulce de leche",
+          "description": "Receta de la abuela.",
+          "price": 4500,
+          "image": "https://images.unsplash.com/photo-1587314160868-4f1428a8e2e1?w=400&q=80",
+          "badge": "mas-pedido"
+        },
+        {
+          "id": "helado",
+          "name": "Copa helada",
+          "description": "2 bochas a elección.",
+          "price": 4200,
+          "image": ""
+        }
+      ]
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promo-martes",
+      "title": "Martes de Empanadas",
+      "description": "Docena a precio especial. Solo en salón.",
+      "image": "https://images.unsplash.com/photo-1601050690597-df0565fac3e5?w=800&q=80",
+      "badge": "promo"
+    },
+    {
+      "id": "promo-happy",
+      "title": "Happy Hour Cerveza",
+      "description": "De 18:00 a 20:00 hs. 2x1 en tiradas.",
+      "image": "https://images.unsplash.com/photo-1535958636474-b021ee654b2e?w=800&q=80",
+      "badge": "nuevo"
+    },
+    {
+      "id": "promo-combo",
+      "title": "Combo Familia",
+      "description": "Ideal para compartir. Ahorrá $5.000.",
+      "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
+      "badge": "mas-pedido"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "María G.",
+      "text": "La milanga completa es increíble. Atención rápida y ambiente familiar.",
+      "rating": 5
+    },
+    {
+      "name": "Lucas R.",
+      "text": "Pedimos por QR y en minutos teníamos el menú. Las empanadas, un diez.",
+      "rating": 5
+    },
+    {
+      "name": "Carolina P.",
+      "text": "Muy buenas las pizzas al molde. Volveremos seguro.",
+      "rating": 4
+    }
+  ],
+  "about": {
+    "history": "Charly Santa Milanga Club nació con la pasión de compartir sabores caseros en un ambiente cálido. Desde hace años recibimos a familias y amigos con el mismo espíritu de siempre: buena comida, buena onda.",
+    "mission": "Ofrecer platos abundantes, frescos y accesibles, con la calidez de un club de barrio donde todos se sienten en casa.",
+    "photos": [
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80",
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80",
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80"
+    ]
+  },
+  "banner": {
+    "title": "¡Esta semana: 15% off en combos!",
+    "subtitle": "Válido de lunes a jueves en salón. Consultá condiciones en caja.",
+    "active": true
+  }
+}

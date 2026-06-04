@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Charly Santa Milanga Club — Menú digital, promociones y contacto. Consultá precios desde tu celular.">
+  <meta name="theme-color" content="#c45c26">
+  <meta name="author" content="Charly Santa Milanga Club">
+  <meta property="og:title" content="Charly Santa Milanga Club">
+  <meta property="og:description" content="Menú digital, promociones y contacto del restaurante.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta name="github-pages-owner" content="nazarenomiguel73">
+  <meta name="github-pages-repo" content="charly-santa-milanga-club">
+  <title>Charly Santa Milanga Club | Menú Digital</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#menu">Ir al menú</a>
+
+  <header class="site-header" id="inicio">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="assets/logo.svg" alt="" class="logo" width="52" height="52">
+        <div>
+          <h1 class="brand-name">Charly Santa Milanga Club</h1>
+          <p class="brand-hours" data-config="hours-weekdays">Cargando horarios…</p>
+        </div>
+      </div>
+      <p class="header-address" data-config="address"></p>
+    </div>
+  </header>
+
+  <a class="whatsapp-float" href="#" data-whatsapp aria-label="Contactar por WhatsApp" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" role="presentation"></div>
+      <div class="hero-content">
+        <p class="hero-badge">Menú digital · Escaneá el QR</p>
+        <h2 id="hero-title">Bienvenido a Charly Santa Milanga Club</h2>
+        <p class="hero-subtitle">Consultá nuestro menú y promociones.</p>
+        <a href="#menu" class="btn btn-primary">Ver Menú</a>
+      </div>
+    </section>
+
+    <section class="promo-banner hidden" id="promo-banner" aria-live="polite">
+      <div class="promo-banner-inner">
+        <span class="badge badge-promo">Promo</span>
+        <div>
+          <strong data-banner="title"></strong>
+          <p data-banner="subtitle"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="promotions" id="promociones" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Promociones</h2>
+      <div class="carousel" data-carousel>
+        <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior">‹</button>
+        <div class="carousel-track" data-carousel-track></div>
+        <button type="button" class="carousel-btn carousel-next" aria-label="Siguiente">›</button>
+        <div class="carousel-dots" data-carousel-dots></div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu" aria-labelledby="menu-heading">
+      <h2 id="menu-heading">Menú Digital</h2>
+
+      <div class="menu-controls">
+        <label class="search-wrap">
+          <span class="visually-hidden">Buscar productos</span>
+          <input type="search" id="search" placeholder="Buscar plato…" autocomplete="off">
+        </label>
+        <div class="controls-row">
+          <label>
+            <span class="visually-hidden">Categoría</span>
+            <select id="category-filter">
+              <option value="">Todas las categorías</option>
+            </select>
+          </label>
+          <label>
+            <span class="visually-hidden">Ordenar</span>
+            <select id="sort-price">
+              <option value="">Ordenar</option>
+              <option value="asc">Precio: menor a mayor</option>
+              <option value="desc">Precio: mayor a menor</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="category-chips" id="category-chips" role="tablist" aria-label="Categorías rápidas"></div>
+      <div id="menu-results" class="menu-results" aria-live="polite"></div>
+      <p id="menu-empty" class="menu-empty hidden">No encontramos productos con ese criterio.</p>
+    </section>
+
+    <section class="about" id="nosotros" aria-labelledby="about-heading">
+      <h2 id="about-heading">Nosotros</h2>
+      <div class="about-grid">
+        <article>
+          <h3>Nuestra historia</h3>
+          <p data-about="history"></p>
+        </article>
+        <article>
+          <h3>Misión</h3>
+          <p data-about="mission"></p>
+        </article>
+      </div>
+      <div class="about-gallery" data-about-gallery></div>
+    </section>
+
+    <section class="reviews" id="resenas" aria-labelledby="reviews-heading">
+      <h2 id="reviews-heading">Reseñas</h2>
+      <div class="reviews-grid" data-reviews></div>
+    </section>
+
+    <section class="contact" id="contacto" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contacto</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <a class="contact-link" href="#" data-whatsapp>
+            <span>WhatsApp</span>
+            <strong data-config="phone"></strong>
+          </a>
+          <a class="contact-link" href="#" data-phone>
+            <span>Teléfono</span>
+            <strong data-config="phone-display"></strong>
+          </a>
+          <p class="contact-item">
+            <span>Dirección</span>
+            <strong data-config="address"></strong>
+          </p>
+          <p class="contact-item">
+            <span>Horarios</span>
+            <strong data-config="hours-weekdays"></strong>
+            <strong data-config="hours-weekend"></strong>
+          </p>
+        </div>
+        <div class="map-wrap">
+          <iframe
+            title="Ubicación en Google Maps"
+            data-maps
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-social" data-social></div>
+    <p class="footer-address" data-config="address"></p>
+    <p class="footer-hours" data-config="hours-weekdays"></p>
+    <p class="footer-github">
+      Sitio en
+      <a href="https://nazarenomiguel73.github.io/charly-santa-milanga-club/" rel="noopener">GitHub Pages</a>
+      ·
+      <a href="https://github.com/nazarenomiguel73/charly-santa-milanga-club" rel="noopener">Repositorio</a>
+    </p>
+    <p class="footer-copy">© <span data-year></span> Charly Santa Milanga Club. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>

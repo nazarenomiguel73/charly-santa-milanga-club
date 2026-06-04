@@ -1,0 +1,23 @@
+{
+  "businessName": "Charly Santa Milanga Club",
+  "tagline": "Consultá nuestro menú y promociones.",
+  "whatsapp": "5493415551234",
+  "phone": "+54 9 341 555-1234",
+  "email": "contacto@charlysantamilanga.com",
+  "address": "Av. San Martín 1250, Santa Fe, Argentina",
+  "mapsEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3396.0!2d-60.6980!3d-31.6333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDM3JzU5LjkiUyA2MMKwNDEnNTIuOCJX!5e0!3m2!1ses!2sar!4v1",
+  "hours": {
+    "weekdays": "Lun a Vie: 11:00 – 15:00 | 19:00 – 00:00",
+    "weekend": "Sáb y Dom: 11:00 – 01:00"
+  },
+  "social": {
+    "instagram": "https://instagram.com/charlysantamilanga",
+    "facebook": "https://facebook.com/charlysantamilanga",
+    "github": "https://github.com/nazarenomiguel73"
+  },
+  "githubPages": {
+    "owner": "nazarenomiguel73",
+    "repo": "charly-santa-milanga-club",
+    "basePath": "/charly-santa-milanga-club/"
+  }
+}
