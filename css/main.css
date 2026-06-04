@@ -395,56 +395,94 @@ a {
   font-weight: 500;
 }
 
-.menu-item-order {
+/* Controles − cantidad + en cada plato */
+.menu-item-stepper {
   flex-shrink: 0;
   align-self: center;
-  width: 40px;
-  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-width: 40px;
+}
+
+.menu-stepper-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   border: none;
-  background: var(--color-text);
-  color: #fff;
-  border-radius: 50%;
   cursor: pointer;
-  box-shadow: var(--shadow);
+  color: #fff;
+  background: var(--color-text);
   transition: transform 0.15s, background 0.15s;
 }
 
-.menu-item-order:hover {
+.menu-stepper-btn--solo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+
+.menu-stepper-btn--solo:hover {
   background: #000;
   transform: scale(1.06);
 }
 
-.menu-item-order.is-in-cart {
-  background: var(--whatsapp);
-  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.35);
+.menu-stepper-btn--solo svg {
+  width: 20px;
+  height: 20px;
 }
 
-.menu-item-order.is-in-cart:hover {
+.menu-item-stepper.has-qty {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--color-surface);
+}
+
+.menu-item-stepper.has-qty .menu-stepper-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.menu-item-stepper.has-qty .menu-stepper-btn:hover {
+  background: var(--color-border);
+}
+
+.menu-item-stepper.has-qty .menu-stepper-btn--plus {
+  background: var(--whatsapp);
+  color: #fff;
+}
+
+.menu-item-stepper.has-qty .menu-stepper-btn--plus:hover {
   background: var(--whatsapp-dark);
 }
 
-.menu-item-order.just-added {
+.menu-stepper-qty {
+  min-width: 1.75rem;
+  padding: 0 0.15rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.menu-stepper-btn.just-added {
   animation: cartPop 0.35s ease;
 }
 
 @keyframes cartPop {
   50% {
-    transform: scale(1.15);
+    transform: scale(1.12);
   }
-}
-
-.menu-item-order svg {
-  width: 20px;
-  height: 20px;
-}
-
-.menu-item-qty {
-  font-size: 0.95rem;
-  font-weight: 700;
 }
 
 .menu-empty {
@@ -1009,7 +1047,7 @@ body.cart-open {
     scroll-behavior: auto;
   }
 
-  .menu-item-order,
+  .menu-stepper-btn,
   .order-bar-btn,
   .cart-panel {
     transition: none;

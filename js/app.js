@@ -284,22 +284,21 @@ function loadCart() {
   }
 }
 
-function addToCart(id) {
+function changeCartDelta(id, delta) {
   const item = state.flatItems.find((i) => i.id === id);
-  if (!item) return;
-  const line = cart.get(id) || { item, qty: 0 };
-  line.qty += 1;
-  cart.set(id, line);
+  if (!item || !delta) return;
+  const next = (cart.get(id)?.qty || 0) + delta;
+  if (next <= 0) cart.delete(id);
+  else cart.set(id, { item, qty: next });
   saveCart();
   updateCartUI();
 }
 
 function setCartQty(id, qty) {
+  const item = state.flatItems.find((i) => i.id === id);
+  if (!item) return;
   if (qty <= 0) cart.delete(id);
-  else {
-    const line = cart.get(id);
-    if (line) line.qty = qty;
-  }
+  else cart.set(id, { item, qty });
   saveCart();
   updateCartUI();
 }
@@ -327,17 +326,32 @@ function updateWhatsAppLinks() {
   }
 }
 
-function syncMenuAddButtons() {
-  document.querySelectorAll("[data-cart-add]").forEach((btn) => {
-    const id = btn.dataset.cartAdd;
-    const qty = cart.get(id)?.qty || 0;
-    const name = btn.dataset.itemName || "producto";
-    btn.classList.toggle("is-in-cart", qty > 0);
-    btn.setAttribute(
-      "aria-label",
-      qty > 0 ? `Agregar otra ${name} al pedido` : `Agregar ${name} al pedido`
-    );
-    btn.innerHTML = qty > 0 ? `<span class="menu-item-qty">${qty}</span>` : ORDER_ICON;
+function getMenuStepperHtml(item) {
+  const id = escapeHtml(item.id);
+  const name = escapeHtml(item.name);
+  const qty = cart.get(item.id)?.qty || 0;
+
+  if (qty === 0) {
+    return `
+      <button type="button" class="menu-stepper-btn menu-stepper-btn--solo" data-cart-qty="${id}" data-delta="1" aria-label="Agregar ${name} al pedido">
+        ${ORDER_ICON}
+      </button>`;
+  }
+
+  return `
+    <button type="button" class="menu-stepper-btn" data-cart-qty="${id}" data-delta="-1" aria-label="Quitar una ${name}">−</button>
+    <span class="menu-stepper-qty" aria-live="polite">${qty}</span>
+    <button type="button" class="menu-stepper-btn menu-stepper-btn--plus" data-cart-qty="${id}" data-delta="1" aria-label="Agregar otra ${name}">+</button>`;
+}
+
+function syncMenuSteppers() {
+  document.querySelectorAll(".menu-item[data-id]").forEach((article) => {
+    const item = state.flatItems.find((i) => i.id === article.dataset.id);
+    const slot = article.querySelector(".menu-item-stepper");
+    if (!item || !slot) return;
+    const qty = cart.get(item.id)?.qty || 0;
+    slot.classList.toggle("has-qty", qty > 0);
+    slot.innerHTML = getMenuStepperHtml(item);
   });
 }
 
@@ -347,7 +361,7 @@ function renderCartDrawer() {
 
   if (!cart.size) {
     container.innerHTML =
-      `<p class="cart-empty">Tu pedido está vacío.<br> Tocá <strong>+</strong> en los platos para agregarlos.</p>`;
+      `<p class="cart-empty">Tu pedido está vacío.<br> Usá <strong>+</strong> en los platos para agregar y <strong>−</strong> para quitar.</p>`;
     return;
   }
 
@@ -405,7 +419,7 @@ function updateCartUI() {
   if (orderBar) orderBar.classList.toggle("has-items", hasItems);
 
   renderCartDrawer();
-  syncMenuAddButtons();
+  syncMenuSteppers();
   updateWhatsAppLinks();
 }
 
@@ -462,11 +476,14 @@ function setupCart() {
   if (menuResults && !menuResults.dataset.cartBound) {
     menuResults.dataset.cartBound = "true";
     menuResults.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-cart-add]");
-      if (!btn) return;
-      addToCart(btn.dataset.cartAdd);
-      btn.classList.add("just-added");
-      setTimeout(() => btn.classList.remove("just-added"), 350);
+      const btn = e.target.closest("[data-cart-qty]");
+      if (!btn || !menuResults.contains(btn)) return;
+      const delta = Number(btn.dataset.delta);
+      changeCartDelta(btn.dataset.cartQty, delta);
+      if (delta > 0) {
+        btn.classList.add("just-added");
+        setTimeout(() => btn.classList.remove("just-added"), 350);
+      }
     });
   }
 }
@@ -474,7 +491,6 @@ function setupCart() {
 function buildMenuItem(item) {
   const label = escapeHtml(item.name);
   const qty = cart.get(item.id)?.qty || 0;
-  const btnContent = qty > 0 ? `<span class="menu-item-qty">${qty}</span>` : ORDER_ICON;
 
   const media = item.image
     ? `<div class="menu-item-media"><img src="${escapeHtml(item.image)}" alt="" loading="lazy"></div>`
@@ -491,13 +507,9 @@ function buildMenuItem(item) {
         <p class="menu-item-desc">${escapeHtml(item.description)}</p>
         <p class="menu-item-price${item.price == null ? " menu-item-price--consult" : ""}">${formatPrice(item.price)}</p>
       </div>
-      <button
-        type="button"
-        class="menu-item-order${qty > 0 ? " is-in-cart" : ""}"
-        data-cart-add="${escapeHtml(item.id)}"
-        data-item-name="${label}"
-        aria-label="${qty > 0 ? `Agregar otra ${label} al pedido` : `Agregar ${label} al pedido`}"
-      >${btnContent}</button>
+      <div class="menu-item-stepper${qty > 0 ? " has-qty" : ""}" role="group" aria-label="Cantidad de ${label}">
+        ${getMenuStepperHtml(item)}
+      </div>
     </article>
   `;
 }
@@ -541,7 +553,7 @@ function renderMenu() {
         ${items.map(buildMenuItem).join("")}
       </div>
     `;
-    syncMenuAddButtons();
+    syncMenuSteppers();
     return;
   }
 
@@ -564,7 +576,7 @@ function renderMenu() {
     )
     .join("");
 
-  syncMenuAddButtons();
+  syncMenuSteppers();
 }
 
 function setupCategoryNav(categories) {
