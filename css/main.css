@@ -384,6 +384,17 @@ a {
   color: var(--color-text);
 }
 
+.menu-item-price--consult {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+.store-meta-note {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
 .menu-item-order {
   flex-shrink: 0;
   align-self: center;

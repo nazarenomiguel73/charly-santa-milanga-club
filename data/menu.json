@@ -2,32 +2,26 @@
   "categories": [
     {
       "id": "pizzas-molde",
-      "name": "Pizzas al Molde",
+      "name": "Pizzas al molde",
       "icon": "🍕",
       "items": [
-        {
-          "id": "pizza-muzza-molde",
-          "name": "Muzzarella al molde",
-          "description": "Masa casera, salsa de tomate y muzzarella fundida.",
-          "price": 8500,
-          "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "pizza-napo-molde",
-          "name": "Napolitana al molde",
-          "description": "Muzzarella, rodajas de tomate fresco, ajo y albahaca.",
-          "price": 9200,
-          "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80",
-          "badge": "promo"
-        },
-        {
-          "id": "pizza-fugazzeta-molde",
-          "name": "Fugazzeta al molde",
-          "description": "Cebolla caramelizada, queso y orégano.",
-          "price": 9800,
-          "image": ""
-        }
+        { "id": "pizza-muzza", "name": "Muzza", "description": "Salsa, muzzarella y aceitunas.", "price": 13000 },
+        { "id": "pizza-jamon", "name": "Jamón", "description": "Salsa, muzzarella, jamón y aceitunas.", "price": 18000 },
+        { "id": "pizza-jamon-moron", "name": "Jamón y morrón", "description": "Salsa, muzzarella, jamón y morrón.", "price": 25000 },
+        { "id": "pizza-calabresa", "name": "Calabresa", "description": "Salsa, muzzarella y longaniza calabresa.", "price": 25000 },
+        { "id": "pizza-jamon-roquefort", "name": "Jamón al Roquefort", "description": "Salsa, muzzarella y queso Roquefort.", "price": 30000 },
+        { "id": "pizza-provenzal", "name": "Provenzal", "description": "Salsa, ajo y perejil.", "price": 16000 },
+        { "id": "pizza-napolitana", "name": "Napolitana", "description": "Salsa, muzzarella y rodajas de tomate.", "price": 20000 },
+        { "id": "pizza-napo-especial", "name": "Napolitana especial", "description": "Salsa, jamón, muzzarella y huevo duro.", "price": 25000 },
+        { "id": "pizza-jamon-crudo", "name": "Jamón crudo, parmesano, rúcula y morrón", "description": "", "price": 35000 },
+        { "id": "pizza-capresse", "name": "Capresse", "description": "Muzzarella, albahaca y tomate.", "price": 22000 },
+        { "id": "pizza-pizzanesa", "name": "Pizzanesa", "description": "Milanesa, jamón, tomate, muzzarella y papas fritas.", "price": 55000, "badge": "mas-pedido" },
+        { "id": "pizza-criolla", "name": "Criolla", "description": "Panceta, huevo y cebolla.", "price": 32000 },
+        { "id": "pizza-fugarella", "name": "Fugarella", "description": "Cebolla y muzzarella.", "price": 16000 },
+        { "id": "pizza-provolones", "name": "Provolones", "description": "Muzzarella y queso Provolone.", "price": 35000 },
+        { "id": "pizza-4-quesos", "name": "4 quesos", "description": "Roquefort, muzzarella, parmesano y Provolone.", "price": 40000 },
+        { "id": "pizza-faina", "name": "Fainá entera", "description": "", "price": 14000 },
+        { "id": "pizza-fugazzeta-rellena", "name": "Fugazzeta rellena", "description": "", "price": 30000 }
       ]
     },
     {
@@ -35,37 +29,14 @@
       "name": "Empanadas",
       "icon": "🥟",
       "items": [
-        {
-          "id": "emp-carne",
-          "name": "Carne cortada a cuchillo",
-          "description": "Unidad. Horno de barro.",
-          "price": 1400,
-          "image": "https://images.unsplash.com/photo-1626082927389-6db097cdf3bd?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "emp-jyq",
-          "name": "Jamón y queso",
-          "description": "Unidad. Relleno cremoso.",
-          "price": 1300,
-          "image": ""
-        },
-        {
-          "id": "emp-humita",
-          "name": "Humita",
-          "description": "Choclo cremoso con especias.",
-          "price": 1300,
-          "image": "",
-          "badge": "nuevo"
-        },
-        {
-          "id": "docena-mixta",
-          "name": "Docena surtida",
-          "description": "Elegí tus gustos al pedir.",
-          "price": 15000,
-          "image": "",
-          "badge": "promo"
-        }
+        { "id": "emp-carne", "name": "Carne", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-pollo", "name": "Pollo", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-jyq", "name": "Jamón y queso", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-napolitana", "name": "Napolitana", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-capresse", "name": "Capresse", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-cebolla-queso", "name": "Cebolla y queso", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-verdura", "name": "Verdura", "description": "Al horno. Por unidad.", "price": 2000 },
+        { "id": "emp-frita", "name": "Empanada frita", "description": "Por unidad. Consultá gustos disponibles.", "price": 2500 }
       ]
     },
     {
@@ -73,20 +44,9 @@
       "name": "Tartas",
       "icon": "🥧",
       "items": [
-        {
-          "id": "tarta-atun",
-          "name": "Tarta de atún",
-          "description": "Porción con ensalada mixta.",
-          "price": 7500,
-          "image": ""
-        },
-        {
-          "id": "tarta-verdura",
-          "name": "Tarta de verdura y queso",
-          "description": "Espinaca, acelga y queso rallado.",
-          "price": 7200,
-          "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80"
-        }
+        { "id": "tarta-zapallito", "name": "Tarta de zapallito", "description": "Porción.", "price": 4500 },
+        { "id": "tarta-verdura", "name": "Tarta de verdura", "description": "Porción.", "price": 4500 },
+        { "id": "tarta-jyq", "name": "Tarta jamón y queso", "description": "Porción.", "price": 4500 }
       ]
     },
     {
@@ -94,117 +54,70 @@
       "name": "Minutas",
       "icon": "🍳",
       "items": [
-        {
-          "id": "milanesa-papas",
-          "name": "Milanesa con papas fritas",
-          "description": "Clásica de la casa, porción generosa.",
-          "price": 11000,
-          "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "bife-chorizo",
-          "name": "Bife de chorizo con ensalada",
-          "description": "A la parrilla, punto a elección.",
-          "price": 14500,
-          "image": ""
-        }
+        { "id": "min-mila-fritas", "name": "Milanesa al plato con fritas", "description": "", "price": 16000, "badge": "mas-pedido" },
+        { "id": "min-mila-napo-fritas", "name": "Milanesa napolitana con fritas", "description": "", "price": 18000 },
+        { "id": "min-mila-fugazzeta-fritas", "name": "Milanesa fugazzeta con fritas", "description": "", "price": 18000 },
+        { "id": "min-bife-costilla", "name": "Bife de costilla con huevo y fritas", "description": "", "price": 20000 },
+        { "id": "min-bife-pollo", "name": "Bife de pollo con fritas o ensalada", "description": "", "price": 18000 },
+        { "id": "min-pollo-cuarto", "name": "1/4 pollo con fritas o ensalada", "description": "", "price": 12000 },
+        { "id": "min-marinera", "name": "Marinera con fritas", "description": "", "price": 15000 },
+        { "id": "min-matambre-pizza", "name": "Matambre a la pizza", "description": "", "price": 22000 }
       ]
     },
     {
       "id": "pastas",
-      "name": "Pastas Caseras",
+      "name": "Pastas caseras",
       "icon": "🍝",
       "items": [
-        {
-          "id": "ravioles-ricota",
-          "name": "Ravioles de ricota",
-          "description": "Salsa fileto, crema o mixta.",
-          "price": 9800,
-          "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80",
-          "badge": "nuevo"
-        },
-        {
-          "id": "noquis-29",
-          "name": "Ñoquis del 29",
-          "description": "Con salsa bolognesa casera.",
-          "price": 9500,
-          "image": ""
-        },
-        {
-          "id": "canelones",
-          "name": "Canelones de verdura",
-          "description": "Gratinados con bechamel.",
-          "price": 10200,
-          "image": ""
-        }
+        { "id": "pasta-fideos", "name": "Fideos (tallarines)", "description": "Salsas: estofado, fileto, rosa, parisienne o tuco de peceto. Consultar precio.", "price": null },
+        { "id": "pasta-ravioles", "name": "Ravioles", "description": "Verdura, pollo o ricota. Consultar precio.", "price": null },
+        { "id": "pasta-noquis", "name": "Ñoquis de papa", "description": "Consultar precio.", "price": null },
+        { "id": "pasta-canelones", "name": "Canelones", "description": "Verdura, carne, pollo o ricota. Consultar precio.", "price": null },
+        { "id": "pasta-lasagna", "name": "Lasagna", "description": "Verdura, ricota, jamón y queso. Consultar precio.", "price": null }
       ]
     },
     {
       "id": "hamburguesas",
-      "name": "Hamburguesas",
+      "name": "Hamburguesas (100% carne)",
       "icon": "🍔",
       "items": [
-        {
-          "id": "burger-clasica",
-          "name": "Clásica Charly",
-          "description": "Medallón 150g, cheddar, lechuga y salsa especial.",
-          "price": 10500,
-          "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "burger-doble",
-          "name": "Doble Santa",
-          "description": "Doble carne, bacon crocante y cebolla caramelizada.",
-          "price": 12800,
-          "image": "",
-          "badge": "promo"
-        }
+        { "id": "burg-jyq", "name": "Con jamón y queso", "description": "", "price": 10000 },
+        { "id": "burg-lechuga-tomate", "name": "Con lechuga y tomate", "description": "", "price": 8000 },
+        { "id": "burg-lt-fritas", "name": "Con lechuga y tomate + fritas", "description": "", "price": 10000 },
+        { "id": "burg-lt-jyq", "name": "Con lechuga, tomate, jamón y queso", "description": "", "price": 10000 },
+        { "id": "burg-lt-jyq-fritas", "name": "Con lechuga, tomate, jamón y queso + fritas", "description": "", "price": 14000 },
+        { "id": "burg-super-doble", "name": "Súper doble medallón + fritas", "description": "", "price": 18000, "badge": "mas-pedido" },
+        { "id": "burg-panceta-cheddar", "name": "Con panceta, cheddar y huevo + fritas", "description": "", "price": 20000 },
+        { "id": "burg-super-bbq", "name": "Súper BBQ, panceta y cheddar + fritas", "description": "", "price": 22000 },
+        { "id": "burg-jyq-fritas", "name": "Con jamón, queso + fritas", "description": "", "price": 12000 }
       ]
     },
     {
       "id": "lomito",
-      "name": "Sandwiches de Lomito",
+      "name": "Sándwich de lomito",
       "icon": "🥩",
       "items": [
-        {
-          "id": "lomito-completo",
-          "name": "Lomito completo",
-          "description": "Lomo, lechuga, tomate, huevo, jamón y queso.",
-          "price": 11500,
-          "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "lomito-simple",
-          "name": "Lomito simple",
-          "description": "Lomo tierno, pan artesanal.",
-          "price": 9800,
-          "image": ""
-        }
+        { "id": "lomo-lt", "name": "Con lechuga y tomate", "description": "", "price": 18000 },
+        { "id": "lomo-lt-fritas", "name": "Con lechuga y tomate + fritas", "description": "", "price": 20000 },
+        { "id": "lomo-jyq", "name": "Con jamón y queso", "description": "", "price": 20000 },
+        { "id": "lomo-jyq-fritas", "name": "Con jamón y queso + fritas", "description": "", "price": 22000 },
+        { "id": "lomo-completo", "name": "Completo", "description": "Lechuga, tomate, jamón y queso.", "price": 21000 },
+        { "id": "lomo-completo-fritas", "name": "Completo + fritas", "description": "Lechuga, tomate, jamón y queso.", "price": 24000 }
       ]
     },
     {
-      "id": "milanesa",
-      "name": "Sandwiches de Milanesa",
+      "id": "milanesa-tucu",
+      "name": "Sándwich de milanesa (Tucumanos)",
       "icon": "🥪",
       "items": [
-        {
-          "id": "sand-mila-completo",
-          "name": "Milanga completa",
-          "description": "La estrella del club: milanesa, huevo, jamón y queso.",
-          "price": 11200,
-          "image": "https://images.unsplash.com/photo-1594212699903-ecda27eca4f0?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "sand-mila-al-plato",
-          "name": "Milanesa al plato",
-          "description": "Con papas y ensalada.",
-          "price": 10800,
-          "image": ""
-        }
+        { "id": "mila-tucu-lt", "name": "Con lechuga y tomate", "description": "", "price": 15000 },
+        { "id": "mila-tucu-jyq", "name": "Con jamón y queso", "description": "", "price": 17000 },
+        { "id": "mila-tucu-lt-fritas", "name": "Con lechuga y tomate + papas fritas", "description": "", "price": 17000 },
+        { "id": "mila-tucu-jyq-fritas", "name": "Con jamón y queso + papas fritas", "description": "", "price": 19000 },
+        { "id": "mila-tucu-lt-jyq-fritas", "name": "Con lechuga, tomate, jamón, queso + fritas", "description": "", "price": 20000 },
+        { "id": "mila-tucu-panceta", "name": "Con panceta, cheddar, huevo y barbacoa + fritas", "description": "", "price": 26000 },
+        { "id": "mila-tucu-super-tucu", "name": "Súper especial del Tucu", "description": "Lechuga, tomate, jamón, queso + fritas con cheddar, panceta y verdeo. Para 2 personas.", "price": 35000, "badge": "mas-pedido" },
+        { "id": "mila-tucu-super-doble", "name": "¡Súper del Tucu!", "description": "2 sándwiches de milanesa con lechuga, tomate, jamón, queso + fritas.", "price": 35000 }
       ]
     },
     {
@@ -212,140 +125,93 @@
       "name": "Combos",
       "icon": "🎁",
       "items": [
-        {
-          "id": "combo-familia",
-          "name": "Combo Familia",
-          "description": "Pizza molde + empanadas x6 + gaseosa 2.25L.",
-          "price": 22000,
-          "image": "",
-          "badge": "promo"
-        },
-        {
-          "id": "combo-almuerzo",
-          "name": "Combo Almuerzo",
-          "description": "Minuta del día + bebida + postre.",
-          "price": 13500,
-          "image": "",
-          "badge": "promo"
-        }
+        { "id": "combo-mila-fritas", "name": "Milanesa al plato con fritas", "description": "Para 2 personas.", "price": 30000, "badge": "promo" },
+        { "id": "combo-mila-napo", "name": "Milanesa napolitana con fritas", "description": "Para 2 personas.", "price": 33000 },
+        { "id": "combo-mila-4g", "name": "Milanesa 4 gustos con fritas", "description": "Para 4 o 5 personas.", "price": 70000 }
       ]
     },
     {
       "id": "especiales",
-      "name": "Platos Especiales",
+      "name": "Platos especiales",
       "icon": "⭐",
       "items": [
-        {
-          "id": "parrillada-club",
-          "name": "Parrillada del Club",
-          "description": "Para 2 personas. Achuras, vacío y chorizo.",
-          "price": 28000,
-          "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80",
-          "badge": "nuevo"
-        },
-        {
-          "id": "matambre",
-          "name": "Matambre a la pizza",
-          "description": "Con papas españolas.",
-          "price": 16500,
-          "image": ""
-        }
+        { "id": "esp-lomo-champi", "name": "Lomo al champiñón", "description": "Con fritas o puré. Consultar precio.", "price": null },
+        { "id": "esp-lomo-verdeo", "name": "Lomo al verdeo", "description": "Con fritas o puré. Consultar precio.", "price": null },
+        { "id": "esp-bife-chorizo", "name": "Bife de chorizo", "description": "Con puré o papas fritas. Consultar precio.", "price": null },
+        { "id": "esp-suprema-crema", "name": "Suprema grillé a la crema", "description": "Con fritas o puré. Consultar precio.", "price": null },
+        { "id": "esp-salmon-camaron", "name": "Salmón rosado a la plancha", "description": "Con salsa de camarones. Consultar precio.", "price": null },
+        { "id": "esp-salmon-verduras", "name": "Salmón grillé con verduras salteadas", "description": "Consultar precio.", "price": null },
+        { "id": "esp-pollo-mar", "name": "Pollo de mar", "description": "Con papas al perejil. Consultar precio.", "price": null },
+        { "id": "esp-entraña", "name": "Entraña al verdeo", "description": "Con papas fritas. Consultar precio.", "price": null },
+        { "id": "esp-matambre-verdeo", "name": "Matambre de ternera al verdeo", "description": "Consultar precio.", "price": null }
       ]
     },
     {
-      "id": "bebidas",
-      "name": "Bebidas",
-      "icon": "🥤",
+      "id": "guisados",
+      "name": "Guisados",
+      "icon": "🍲",
       "items": [
-        {
-          "id": "gaseosa",
-          "name": "Gaseosa 500ml",
-          "description": "Coca, Sprite o Fanta.",
-          "price": 2500,
-          "image": ""
-        },
-        {
-          "id": "cerveza",
-          "name": "Cerveza tirada 500cc",
-          "description": "Rubia o roja.",
-          "price": 3500,
-          "image": "https://images.unsplash.com/photo-1608270581920-85f9e3c63d7b?w=400&q=80"
-        },
-        {
-          "id": "agua",
-          "name": "Agua mineral",
-          "description": "Con o sin gas 500ml.",
-          "price": 1800,
-          "image": ""
-        }
+        { "id": "gui-arroz", "name": "Guiso de arroz", "description": "Consultar disponibilidad y precio.", "price": null },
+        { "id": "gui-mondongo", "name": "Mondongo", "description": "Consultar disponibilidad y precio.", "price": null },
+        { "id": "gui-arroz-pollo", "name": "Arroz con pollo", "description": "Consultar disponibilidad y precio.", "price": null },
+        { "id": "gui-locro", "name": "Locro", "description": "Consultar disponibilidad y precio.", "price": null },
+        { "id": "gui-ternerita", "name": "Ternerita con arroz", "description": "Consultar disponibilidad y precio.", "price": null }
       ]
     },
     {
-      "id": "postres",
-      "name": "Postres",
-      "icon": "🍰",
+      "id": "otros",
+      "name": "Otros",
+      "icon": "🍗",
       "items": [
-        {
-          "id": "flan",
-          "name": "Flan casero con dulce de leche",
-          "description": "Receta de la abuela.",
-          "price": 4500,
-          "image": "https://images.unsplash.com/photo-1587314160868-4f1428a8e2e1?w=400&q=80",
-          "badge": "mas-pedido"
-        },
-        {
-          "id": "helado",
-          "name": "Copa helada",
-          "description": "2 bochas a elección.",
-          "price": 4200,
-          "image": ""
-        }
+        { "id": "pollo-spiedo", "name": "Pollo al spiedo con fritas", "description": "Consultar precio.", "price": null },
+        { "id": "bebidas-carta", "name": "Bebidas con y sin alcohol", "description": "Consultar carta en el local.", "price": null },
+        { "id": "postres-carta", "name": "Postres", "description": "Consultar carta en el local.", "price": null }
       ]
     }
   ],
   "promotions": [
     {
-      "id": "promo-martes",
-      "title": "Martes de Empanadas",
-      "description": "Docena a precio especial. Solo en salón.",
+      "id": "promo-efectivo",
+      "title": "Promos para más de 2 personas",
+      "description": "Pagando en efectivo. Consultá en el local o por WhatsApp.",
       "image": "https://images.unsplash.com/photo-1601050690597-df0565fac3e5?w=800&q=80",
       "badge": "promo"
     },
     {
-      "id": "promo-happy",
-      "title": "Happy Hour Cerveza",
-      "description": "De 18:00 a 20:00 hs. 2x1 en tiradas.",
-      "image": "https://images.unsplash.com/photo-1535958636474-b021ee654b2e?w=800&q=80",
-      "badge": "nuevo"
+      "id": "promo-carta",
+      "title": "Promociones en pizzas, empanadas y sándwiches",
+      "description": "Consultá las promos del día por WhatsApp.",
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+      "badge": "promo"
     },
     {
-      "id": "promo-combo",
-      "title": "Combo Familia",
-      "description": "Ideal para compartir. Ahorrá $5.000.",
+      "id": "promo-delivery",
+      "title": "Delivery sin cargo",
+      "description": "Pedí desde el menú digital y coordiná por WhatsApp.",
       "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
-      "badge": "mas-pedido"
+      "badge": "nuevo"
     }
   ],
   "reviews": [
     {
-      "name": "María G.",
-      "text": "La milanga completa es increíble. Atención rápida y ambiente familiar.",
+      "name": "Cliente local",
+      "text": "Las milanesas tucumanas y las pizzas al molde son lo más pedido. Muy buena atención.",
       "rating": 5
     },
     {
-      "name": "Lucas R.",
-      "text": "Pedimos por QR y en minutos teníamos el menú. Las empanadas, un diez.",
+      "name": "Familia de Lomas",
+      "text": "Delivery sin cargo y menú variado. Ideal para almorzar o cenar en familia.",
       "rating": 5
     },
     {
-      "name": "Carolina P.",
-      "text": "Muy buenas las pizzas al molde. Volveremos seguro.",
+      "name": "Vecino del barrio",
+      "text": "Empanadas y combos para compartir. Recomendable pedir por WhatsApp.",
       "rating": 4
     }
   ],
   "about": {
-    "history": "Charly Santa Milanga Club nació con la pasión de compartir sabores caseros en un ambiente cálido. Desde hace años recibimos a familias y amigos con el mismo espíritu de siempre: buena comida, buena onda.",
-    "mission": "Ofrecer platos abundantes, frescos y accesibles, con la calidez de un club de barrio donde todos se sienten en casa.",
+    "history": "Charly Santa Milanga Club es un club gastronómico en Lomas de Zamora, en Balcarce 199. Desde hace años ofrecemos pizzas al molde, empanadas, milanesas, minutas y platos caseros con la calidez de un lugar de barrio.",
+    "mission": "Buena comida abundante, delivery sin cargo, descuentos en efectivo y la posibilidad de pagar con Mercado Pago. Menú fijo todos los días para que encuentres siempre tu plato favorito.",
     "photos": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80",
       "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80",
@@ -353,8 +219,8 @@
     ]
   },
   "banner": {
-    "title": "¡Esta semana: 15% off en combos!",
-    "subtitle": "Válido de lunes a jueves en salón. Consultá condiciones en caja.",
+    "title": "Consultá promos en pizzas, empanadas y sándwiches",
+    "subtitle": "Promos para más de 2 personas en efectivo · Delivery sin cargo",
     "active": true
   }
 }

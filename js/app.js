@@ -40,11 +40,16 @@ function escapeHtml(str) {
 }
 
 function formatPrice(amount) {
+  if (amount == null || amount === "") return "Consultar";
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+function formatPriceForWhatsApp(item) {
+  return item.price != null && item.price !== "" ? formatPrice(item.price) : "consultar precio";
 }
 
 function renderBadge(badgeKey) {
@@ -100,7 +105,7 @@ function itemOrderMessage(item) {
   const name = state.config?.businessName || "Charly Santa Milanga Club";
   return (
     `Hola! Vi el menú de *${name}* y me interesa:\n\n` +
-    `• *${item.name}* — ${formatPrice(item.price)}`
+    `• *${item.name}* — ${formatPriceForWhatsApp(item)}`
   );
 }
 
@@ -126,8 +131,22 @@ function applyConfig(config) {
 
   document.querySelectorAll("[data-config]").forEach((el) => {
     const key = el.getAttribute("data-config");
-    if (map[key]) el.textContent = map[key];
+    if (map[key]) {
+      el.textContent = map[key];
+    } else {
+      el.hidden = true;
+    }
   });
+
+  const storeMeta = document.querySelector(".store-meta");
+  if (storeMeta && config.notes?.length) {
+    config.notes.forEach((note) => {
+      const li = document.createElement("li");
+      li.className = "store-meta-note";
+      li.textContent = note;
+      storeMeta.appendChild(li);
+    });
+  }
 
   const mapsEl = document.querySelector("[data-maps]");
   if (mapsEl) mapsEl.src = config.mapsEmbed;
@@ -226,7 +245,7 @@ function buildMenuItem(item) {
           ${renderBadge(item.badge)}
         </div>
         <p class="menu-item-desc">${escapeHtml(item.description)}</p>
-        <p class="menu-item-price">${formatPrice(item.price)}</p>
+        <p class="menu-item-price${item.price == null ? " menu-item-price--consult" : ""}">${formatPrice(item.price)}</p>
       </div>
       <a
         class="menu-item-order"
