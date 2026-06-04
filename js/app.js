@@ -1,7 +1,6 @@
 /**
- * Charly Santa Milanga Club — Menú digital
- * Datos desde JSON (listo para panel admin futuro)
- * Compatible con GitHub Pages: https://nazarenomiguel73.github.io/charly-santa-milanga-club/
+ * Charly Santa Milanga Club — Menú digital estilo carta online
+ * Sin carrito: cada plato y el pedido general abren WhatsApp
  */
 
 const BADGE_LABELS = {
@@ -10,7 +9,6 @@ const BADGE_LABELS = {
   "mas-pedido": { class: "badge-mas-pedido", text: "Más pedido" },
 };
 
-/** Base path para GitHub Pages (proyecto) o vacío en local / dominio raíz */
 function resolveBasePath() {
   const { hostname, pathname } = window.location;
   if (hostname.endsWith("github.io")) {
@@ -31,6 +29,14 @@ const BASE = resolveBasePath();
 function assetUrl(relativePath) {
   const clean = relativePath.replace(/^\.\//, "");
   return `${BASE}${clean}`;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function formatPrice(amount) {
@@ -62,6 +68,7 @@ let state = {
   config: null,
   menuData: null,
   flatItems: [],
+  categories: [],
 };
 
 function flattenMenu(categories) {
@@ -75,11 +82,31 @@ function flattenMenu(categories) {
   );
 }
 
+function getWhatsAppNumber() {
+  return state.config?.whatsapp?.replace(/\D/g, "") || "";
+}
+
+function buildWhatsAppUrl(message) {
+  const wa = getWhatsAppNumber();
+  return `https://wa.me/${wa}?text=${encodeURIComponent(message)}`;
+}
+
+function generalOrderMessage() {
+  const name = state.config?.businessName || "Charly Santa Milanga Club";
+  return `Hola! Quiero hacer un pedido desde el menú digital de *${name}*.`;
+}
+
+function itemOrderMessage(item) {
+  const name = state.config?.businessName || "Charly Santa Milanga Club";
+  return (
+    `Hola! Vi el menú de *${name}* y me interesa:\n\n` +
+    `• *${item.name}* — ${formatPrice(item.price)}`
+  );
+}
+
 function applyConfig(config) {
   state.config = config;
-  const wa = config.whatsapp.replace(/\D/g, "");
-  const waMsg = encodeURIComponent("Hola! Vi el menú digital de Charly Santa Milanga Club.");
-  const waUrl = `https://wa.me/${wa}?text=${waMsg}`;
+  const waUrl = buildWhatsAppUrl(generalOrderMessage());
 
   document.querySelectorAll("[data-whatsapp]").forEach((el) => {
     el.href = waUrl;
@@ -94,7 +121,6 @@ function applyConfig(config) {
     tagline: config.tagline,
     "hours-weekdays": config.hours.weekdays,
     "hours-weekend": config.hours.weekend,
-    phone: "WhatsApp disponible",
     "phone-display": config.phone,
   };
 
@@ -111,7 +137,6 @@ function applyConfig(config) {
     social.innerHTML = `
       <a href="${config.social.instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="${config.social.facebook}" target="_blank" rel="noopener noreferrer">Facebook</a>
-      <a href="https://github.com/${config.githubPages.owner}/${config.githubPages.repo}" target="_blank" rel="noopener noreferrer">GitHub</a>
     `;
   }
 
@@ -136,69 +161,26 @@ function renderBanner(banner) {
   el.querySelector("[data-banner=subtitle]").textContent = banner.subtitle;
 }
 
-function renderCarousel(promotions) {
-  const track = document.querySelector("[data-carousel-track]");
-  const dots = document.querySelector("[data-carousel-dots]");
-  if (!track || !promotions?.length) return;
+function renderPromotions(promotions) {
+  const section = document.querySelector("[data-promo-section]");
+  const list = document.querySelector("[data-promo-list]");
+  if (!section || !list || !promotions?.length) return;
 
-  track.innerHTML = promotions
+  section.hidden = false;
+  list.innerHTML = promotions
     .map(
       (p) => `
-    <article class="promo-slide">
-      <img src="${p.image}" alt="" loading="lazy" width="800" height="450">
-      <div class="promo-slide-body">
+    <article class="promo-card">
+      <img src="${escapeHtml(p.image)}" alt="" loading="lazy" width="88" height="66">
+      <div>
         ${renderBadge(p.badge)}
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
+        <h3>${escapeHtml(p.title)}</h3>
+        <p>${escapeHtml(p.description)}</p>
       </div>
     </article>
   `
     )
     .join("");
-
-  dots.innerHTML = promotions
-    .map((_, i) => `<button type="button" class="carousel-dot${i === 0 ? " active" : ""}" data-index="${i}" aria-label="Slide ${i + 1}"></button>`)
-    .join("");
-
-  initCarousel(track, dots);
-}
-
-function initCarousel(track, dotsContainer) {
-  const slides = [...track.querySelectorAll(".promo-slide")];
-  let index = 0;
-  let timer;
-
-  const goTo = (i) => {
-    index = (i + slides.length) % slides.length;
-    const slide = slides[index];
-    track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: "smooth" });
-    dotsContainer.querySelectorAll(".carousel-dot").forEach((d, j) => {
-      d.classList.toggle("active", j === index);
-    });
-  };
-
-  const startAuto = () => {
-    clearInterval(timer);
-    timer = setInterval(() => goTo(index + 1), 5000);
-  };
-
-  dotsContainer.addEventListener("click", (e) => {
-    const btn = e.target.closest(".carousel-dot");
-    if (!btn) return;
-    goTo(Number(btn.dataset.index));
-    startAuto();
-  });
-
-  document.querySelector(".carousel-prev")?.addEventListener("click", () => {
-    goTo(index - 1);
-    startAuto();
-  });
-  document.querySelector(".carousel-next")?.addEventListener("click", () => {
-    goTo(index + 1);
-    startAuto();
-  });
-
-  startAuto();
 }
 
 function renderAbout(about) {
@@ -206,7 +188,7 @@ function renderAbout(about) {
   document.querySelector("[data-about=mission]").textContent = about.mission;
   const gallery = document.querySelector("[data-about-gallery]");
   gallery.innerHTML = about.photos
-    .map((src) => `<img src="${src}" alt="Foto del local" loading="lazy" width="400" height="400">`)
+    .map((src) => `<img src="${escapeHtml(src)}" alt="Foto del local" loading="lazy" width="400" height="400">`)
     .join("");
 }
 
@@ -217,44 +199,49 @@ function renderReviews(reviews) {
       (r) => `
     <blockquote class="review-card">
       <div class="stars" aria-label="${r.rating} de 5 estrellas">${renderStars(r.rating)}</div>
-      <p>"${r.text}"</p>
-      <cite>— ${r.name}</cite>
+      <p>"${escapeHtml(r.text)}"</p>
+      <cite>— ${escapeHtml(r.name)}</cite>
     </blockquote>
   `
     )
     .join("");
 }
 
-function buildProductCard(item) {
-  const imageBlock = item.image
-    ? `<div class="product-card-image"><img src="${item.image}" alt="" loading="lazy"></div>`
-    : `<div class="product-card-image placeholder" aria-hidden="true">${item.categoryIcon || "🍽️"}</div>`;
+const ORDER_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`;
+
+function buildMenuItem(item) {
+  const waUrl = buildWhatsAppUrl(itemOrderMessage(item));
+  const label = escapeHtml(item.name);
+
+  const media = item.image
+    ? `<div class="menu-item-media"><img src="${escapeHtml(item.image)}" alt="" loading="lazy"></div>`
+    : `<div class="menu-item-media placeholder" aria-hidden="true">${item.categoryIcon || "🍽️"}</div>`;
 
   return `
-    <article class="product-card" data-id="${item.id}">
-      ${imageBlock}
-      <div class="product-card-body">
-        <div class="card-badges">${renderBadge(item.badge)}</div>
-        <div class="product-card-header">
-          <h4>${item.name}</h4>
-          <span class="price">${formatPrice(item.price)}</span>
+    <article class="menu-item" data-id="${escapeHtml(item.id)}">
+      ${media}
+      <div class="menu-item-body">
+        <div class="menu-item-top">
+          <h4>${label}</h4>
+          ${renderBadge(item.badge)}
         </div>
-        <p class="description">${item.description}</p>
+        <p class="menu-item-desc">${escapeHtml(item.description)}</p>
+        <p class="menu-item-price">${formatPrice(item.price)}</p>
       </div>
+      <a
+        class="menu-item-order"
+        href="${waUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Pedir ${label} por WhatsApp"
+      >${ORDER_ICON}</a>
     </article>
   `;
 }
 
 function getFilteredItems() {
   const search = document.getElementById("search").value.trim().toLowerCase();
-  const category = document.getElementById("category-filter").value;
-  const sort = document.getElementById("sort-price").value;
-
   let items = [...state.flatItems];
-
-  if (category) {
-    items = items.filter((i) => i.categoryId === category);
-  }
 
   if (search) {
     items = items.filter(
@@ -265,91 +252,124 @@ function getFilteredItems() {
     );
   }
 
-  if (sort === "asc") items.sort((a, b) => a.price - b.price);
-  if (sort === "desc") items.sort((a, b) => b.price - a.price);
-
   return items;
 }
 
 function renderMenu() {
   const container = document.getElementById("menu-results");
   const empty = document.getElementById("menu-empty");
+  const nav = document.getElementById("category-nav");
   const items = getFilteredItems();
-  const sort = document.getElementById("sort-price").value;
-  const categoryFilter = document.getElementById("category-filter").value;
+  const search = document.getElementById("search").value.trim();
 
   if (!items.length) {
     container.innerHTML = "";
     empty.classList.remove("hidden");
+    if (nav) nav.classList.add("hidden");
     return;
   }
-  empty.classList.add("hidden");
 
-  if (sort || categoryFilter) {
-    container.innerHTML = `<div class="product-grid">${items.map(buildProductCard).join("")}</div>`;
+  empty.classList.add("hidden");
+  if (nav) nav.classList.remove("hidden");
+
+  if (search) {
+    container.innerHTML = `
+      <div class="menu-list">
+        ${items.map(buildMenuItem).join("")}
+      </div>
+    `;
     return;
   }
 
   const byCategory = new Map();
-  for (const item of items) {
-    if (!byCategory.has(item.categoryId)) {
-      byCategory.set(item.categoryId, { name: item.categoryName, icon: item.categoryIcon, items: [] });
-    }
-    byCategory.get(item.categoryId).items.push(item);
+  for (const cat of state.categories) {
+    const catItems = items.filter((i) => i.categoryId === cat.id);
+    if (catItems.length) byCategory.set(cat.id, { ...cat, items: catItems });
   }
 
   container.innerHTML = [...byCategory.values()]
     .map(
       (cat) => `
-      <section class="menu-category" id="cat-${cat.name.replace(/\s+/g, "-").toLowerCase()}">
-        <h3>${cat.icon} ${cat.name}</h3>
-        <div class="product-grid">${cat.items.map(buildProductCard).join("")}</div>
+      <section class="menu-category" id="cat-${escapeHtml(cat.id)}" data-category-id="${escapeHtml(cat.id)}">
+        <h2 class="menu-category-title">${cat.icon} ${escapeHtml(cat.name)}</h2>
+        <div class="menu-list">
+          ${cat.items.map(buildMenuItem).join("")}
+        </div>
       </section>
     `
     )
     .join("");
 }
 
-function setupFilters(categories) {
-  const select = document.getElementById("category-filter");
-  const chips = document.getElementById("category-chips");
+function setupCategoryNav(categories) {
+  const nav = document.getElementById("category-nav");
+  if (!nav) return;
 
-  categories.forEach((cat) => {
-    const opt = document.createElement("option");
-    opt.value = cat.id;
-    opt.textContent = cat.name;
-    select.appendChild(opt);
+  nav.innerHTML = categories
+    .map(
+      (cat) => `
+    <button type="button" class="category-nav-btn" data-category="${escapeHtml(cat.id)}">
+      ${escapeHtml(cat.name)}
+    </button>
+  `
+    )
+    .join("");
 
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = "chip";
-    chip.textContent = `${cat.icon} ${cat.name}`;
-    chip.dataset.category = cat.id;
-    chip.addEventListener("click", () => {
-      const active = chip.classList.contains("active");
-      chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-      if (active) {
-        select.value = "";
-      } else {
-        chip.classList.add("active");
-        select.value = cat.id;
+  nav.addEventListener("click", (e) => {
+    const btn = e.target.closest(".category-nav-btn");
+    if (!btn) return;
+    const id = btn.dataset.category;
+    const section = document.getElementById(`cat-${id}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveNavButton(id);
+    }
+  });
+
+  setupCategoryScrollSpy(categories);
+}
+
+function setActiveNavButton(categoryId) {
+  document.querySelectorAll(".category-nav-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.category === categoryId);
+  });
+}
+
+function setupCategoryScrollSpy(categories) {
+  const sections = categories
+    .map((c) => document.getElementById(`cat-${c.id}`))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) {
+        setActiveNavButton(visible.target.dataset.categoryId);
       }
-      renderMenu();
-      document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    chips.appendChild(chip);
-  });
+    },
+    { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5] }
+  );
 
-  select.addEventListener("change", () => {
-    const val = select.value;
-    chips.querySelectorAll(".chip").forEach((c) => {
-      c.classList.toggle("active", c.dataset.category === val);
-    });
-    renderMenu();
-  });
+  const observeSections = () => {
+    document.querySelectorAll(".menu-category").forEach((el) => observer.observe(el));
+  };
 
+  observeSections();
+
+  const menuResults = document.getElementById("menu-results");
+  const mo = new MutationObserver(() => {
+    observer.disconnect();
+    observeSections();
+  });
+  mo.observe(menuResults, { childList: true });
+}
+
+function setupSearch() {
   document.getElementById("search").addEventListener("input", renderMenu);
-  document.getElementById("sort-price").addEventListener("change", renderMenu);
 }
 
 function fixStaticAssetPaths() {
@@ -357,28 +377,16 @@ function fixStaticAssetPaths() {
     const href = el.getAttribute("href");
     if (href && !href.startsWith("http")) el.href = assetUrl(href);
   });
-  const logo = document.querySelector(".logo");
-  if (logo?.src && logo.src.includes("/assets/")) {
-    logo.src = assetUrl("assets/logo.svg");
-  }
-}
-
-function setupHeaderScroll() {
-  const header = document.querySelector(".site-header");
-  if (!header) return;
-
-  const onScroll = () => {
-    header.classList.toggle("is-scrolled", window.scrollY > 12);
-  };
-
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  document.querySelectorAll(".store-logo, .footer-logo").forEach((logo) => {
+    if (logo?.getAttribute("src")?.includes("assets/")) {
+      logo.src = assetUrl("assets/logo.svg");
+    }
+  });
 }
 
 async function init() {
   try {
     fixStaticAssetPaths();
-    setupHeaderScroll();
 
     const [config, menuData] = await Promise.all([
       loadJson("data/config.json"),
@@ -386,15 +394,21 @@ async function init() {
     ]);
 
     state.menuData = menuData;
+    state.categories = menuData.categories;
     state.flatItems = flattenMenu(menuData.categories);
 
     applyConfig(config);
     renderBanner(menuData.banner);
-    renderCarousel(menuData.promotions);
+    renderPromotions(menuData.promotions);
     renderAbout(menuData.about);
     renderReviews(menuData.reviews);
-    setupFilters(menuData.categories);
+    setupCategoryNav(menuData.categories);
+    setupSearch();
     renderMenu();
+
+    if (menuData.categories[0]) {
+      setActiveNavButton(menuData.categories[0].id);
+    }
 
     if (window.location.hash) {
       const id = window.location.hash.slice(1);
@@ -403,7 +417,7 @@ async function init() {
   } catch (err) {
     console.error(err);
     document.getElementById("menu-results").innerHTML =
-      `<p class="menu-empty">Error al cargar el menú. Si abrís el archivo directamente, usá un servidor local o publicá en GitHub Pages.</p>`;
+      `<p class="menu-empty">Error al cargar el menú. Usá un servidor local o publicá en GitHub Pages.</p>`;
   }
 }
 
